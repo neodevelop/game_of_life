@@ -7,7 +7,7 @@ defmodule OrganismTest do
   end
 
   @tag position: []
-  test "given an organism with an initial state of [[0, 0, 0], [0, 1, 0], [1, 0, 1]] it shuold return a new Organism structure", context do
+  test "given an organism with an initial state of [[0, 0, 0], [0, 1, 0], [1, 0, 1]] it should return a new Organism structure", context do
     cells = context[:cells]
     organism = %Organism{cells: cells}
     assert ^cells = organism.cells, "There was something wrong with initialization"
@@ -29,6 +29,33 @@ defmodule OrganismTest do
     neighbors = Organism.neighbors(organism, context[:position])
 
     assert 5 = length(neighbors)
+  end
+
+  @tag position: [x: 0, y: 2]
+  test "given a cell in position [0, 2], it should return three neighbors", context do
+    cells = context[:cells]
+    organism = %Organism{cells: cells}
+    neighbors = Organism.neighbors(organism, context[:position])
+
+    assert 3 = length(neighbors)
+  end
+
+  @tag position: [x: 1, y: 0]
+  test "given a cell in position [1, 0], it should return five neighbors", context do
+    cells = context[:cells]
+    organism = %Organism{cells: cells}
+    neighbors = Organism.neighbors(organism, context[:position])
+
+    assert 5 = length(neighbors)
+  end
+
+  @tag position: [x: 1, y: 1]
+  test "given a cell in position [1, 1], it should return eight neighbors", context do
+    cells = context[:cells]
+    organism = %Organism{cells: cells}
+    neighbors = Organism.neighbors(organism, context[:position])
+
+    assert 8 = length(neighbors)
   end
 
 end
