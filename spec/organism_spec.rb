@@ -45,7 +45,7 @@ RSpec.describe Organism do
     neighborhood = [0,0,0,0,1]
     living_cell = 1
 
-    expect(organism.might_die_because_has_fewer_than_two_neighbours(living_cell, neighborhood)).to be_falsy
+    expect(organism.might_die_because_has_fewer_than_two_neighbours(living_cell, neighborhood)).to be_truthy
   end
 
   it "given a neighborhood for a livin cell with no more than 2 or 3 live neighbors should live in the next generation" do
@@ -67,7 +67,7 @@ RSpec.describe Organism do
     neighborhood = [1,1,1,1,0,0]
     living_cell = 1
 
-    expect(organism.might_die_because_has_more_than_tree_neighbours(living_cell, neighborhood)).to be_falsy
+    expect(organism.might_die_because_has_more_than_tree_neighbours(living_cell, neighborhood)).to be_truthy
 
   end
   #Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.

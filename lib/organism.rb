@@ -2,10 +2,11 @@ require 'matrix'
 
 class Organism
 
-  attr_accessor :cells
+  attr_accessor :cells, :next_state
 
   def initialize
     @cells = [[0,0,0],[0,1,0],[1,0,1]]
+    @next_state = [[0,0,0],[0,1,0],[1,0,1]]
   end
 
   def populate(cells)
@@ -42,7 +43,7 @@ class Organism
   end
 
   def might_die_because_has_fewer_than_two_neighbours(cell, neighbors)
-    !(neighbors.count(1) < 2)
+    neighbors.count(1) < 2
   end
 
   def might_live_because_has_two_or_three_neighbours(cell, neighbors)
@@ -50,7 +51,7 @@ class Organism
   end
   
   def might_die_because_has_more_than_tree_neighbours(cell,neighbors)
-    !(neighbors.count(1) > 3)
+    neighbors.count(1) > 3
   end
 
   def might_reborn_because_has_exactly_three_neighbours(cell, neighbors)
@@ -60,21 +61,21 @@ class Organism
   def next_state
     matrix = Matrix.rows @cells
 
-    new_state = @cells
+    new_state = @next_state
     matrix.each_with_index do |cell, x, y|
       neighbors = find_neighbors(x, y)
       case cell
         when 1
           if(might_die_because_has_fewer_than_two_neighbours(cell, neighbors) or might_die_because_has_more_than_tree_neighbours(cell, neighbors)) then
             new_state[x][y] = 0 
-          else
-            new_state[x][y] = 1 if(might_live_because_has_two_or_three_neighbours(cell, neighbors))
+          end
+          if(might_live_because_has_two_or_three_neighbours(cell, neighbors)) then
+            new_state[x][y] = 1
           end
         else
           new_state[x][y] = might_reborn_because_has_exactly_three_neighbours(cell, neighbors) ? 1 : 0
       end
     end
-
     new_state
   end
 
