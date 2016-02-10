@@ -61,22 +61,17 @@ class Organism
   def next_state
     matrix = Matrix.rows @cells
 
-    new_state = @next_state
     matrix.each_with_index do |cell, x, y|
       neighbors = find_neighbors(x, y)
       case cell
         when 1
-          if(might_die_because_has_fewer_than_two_neighbours(cell, neighbors) or might_die_because_has_more_than_tree_neighbours(cell, neighbors)) then
-            new_state[x][y] = 0 
-          end
-          if(might_live_because_has_two_or_three_neighbours(cell, neighbors)) then
-            new_state[x][y] = 1
-          end
+          @next_state[x][y] = 0 if(might_die_because_has_fewer_than_two_neighbours(cell, neighbors) or might_die_because_has_more_than_tree_neighbours(cell, neighbors))
+          @next_state[x][y] = 1 if(might_live_because_has_two_or_three_neighbours(cell, neighbors))
         else
-          new_state[x][y] = might_reborn_because_has_exactly_three_neighbours(cell, neighbors) ? 1 : 0
+          @next_state[x][y] = might_reborn_because_has_exactly_three_neighbours(cell, neighbors) ? 1 : 0
       end
     end
-    new_state
+    @next_state
   end
 
 end

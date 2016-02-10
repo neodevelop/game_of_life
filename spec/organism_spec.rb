@@ -83,6 +83,4 @@ RSpec.describe Organism do
     expect(cells).to match_array([[0,0,0],[0,1,0],[0,1,0]])
   end
 
-
-
 end
