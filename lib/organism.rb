@@ -1,3 +1,5 @@
+require 'matrix'
+
 class Organism
 
   attr_accessor :cells
@@ -18,40 +20,62 @@ class Organism
     end
   end
 
-  def find_neighbors(position)
-    x = position[0]
-    y = position[1]
+  def find_neighbors(x, y)
+    coordinates_for_neighbors = coordinates(x, y)
+
+    matrix = Matrix.rows @cells
 
     neighbors = []
-
-    (-1..1).each do | i |
-      (-1..1).each do | j |
-        p "#{x+i} #{y+j}" 
-        if (x+i >= 0) && (y+j >= 0) then
-          if (x+i != x) && (y+j != y) then
-            neighbors << @cells[x+i][y+j]
-          end
-        end
+    coordinates_for_neighbors.each do |(x, y)|
+      if(x.between?(0, matrix.row_count - 1) and
+         y.between?(0, matrix.column_count - 1)) then
+        neighbors << @cells[x][y]
       end
     end
-    p neighbors
-
     neighbors
-    #if(position == [0, 0]) then
-    #  [0, 0, 0]
-    #else 
-    #  if(position == [0, 1]) then
-    #    [0, 0, 0, 0, 0]
-    #  else
-    #    if(position == [0, 2]) then
-    #      [0, 0, 0]
-    #    else
-    #      if(position == [1, 0]) then
-    #        [0, 0, 0,0,0]
-    #      end
-    #    end
-    #  end
-    #end
+  end
+
+  def coordinates(x, y)
+    [[x - 1, y - 1], [x - 1, y], [x - 1, y + 1],
+     [x, y - 1],                 [x, y + 1],
+     [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]]
+  end
+
+  def might_die_because_has_fewer_than_two_neighbours(cell, neighbors)
+    !(neighbors.count(1) < 2)
+  end
+
+  def might_live_because_has_two_or_three_neighbours(cell, neighbors)
+    (neighbors.count(1) >= 2 and neighbors.count(1) <= 3)
+  end
+  
+  def might_die_because_has_more_than_tree_neighbours(cell,neighbors)
+    !(neighbors.count(1) > 3)
+  end
+
+  def might_reborn_because_has_exactly_three_neighbours(cell, neighbors)
+    (neighbors.count(1)==3)
+  end
+
+  def next_state
+    matrix = Matrix.rows @cells
+
+    new_state = @cells
+    matrix.each_with_index do |cell, x, y|
+      neighbors = find_neighbors(x, y)
+      case cell
+        when 1
+          if(might_die_because_has_fewer_than_two_neighbours(cell, neighbors) or might_die_because_has_more_than_tree_neighbours(cell, neighbors)) then
+            new_state[x][y] = 0 
+          else
+            new_state[x][y] = 1 if(might_live_because_has_two_or_three_neighbours(cell, neighbors))
+          end
+        else
+          new_state[x][y] = might_reborn_because_has_exactly_three_neighbours(cell, neighbors) ? 1 : 0
+      end
+    end
+
+    new_state
   end
 
 end
