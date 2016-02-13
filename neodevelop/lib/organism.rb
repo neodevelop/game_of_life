@@ -54,11 +54,7 @@ class Organism
   def body
     display = ""
     @cells.each_with_index do |e, row, col|
-      if e == 1 then
-        display += "*"
-      else
-        display += " "
-      end
+      display += e == 1 ? "*" : " "
       display += NEW_LINE if ((col+1) % @cells.column_count) == 0
     end
     display
