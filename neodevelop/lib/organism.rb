@@ -2,7 +2,7 @@ require "matrix"
 
 class Organism
 
-  attr_accessor :cells, :next_generation
+  attr_accessor :cells, :next_generation, :cell_colors
   NEW_LINE = "\n"
 
   def initialize
@@ -12,6 +12,12 @@ class Organism
   def feed(population)
     @cells = Matrix.rows population
     @next_generation = Matrix.rows population
+    colors = []
+    population.each do |line|
+      colors << line.collect do |c| c == 0 ? :black : :green end
+    end
+    @cell_colors = colors
+    self
   end
 
   def cell_at(x, y)
@@ -34,7 +40,6 @@ class Organism
     local_cells = @next_generation.to_a
     @cells.each_with_index do |c, x, y|
       neighbors = neighbors_at x, y
-      #p "#{x} #{y} #{c} #{neighbors}"
       case
       when c == 1
         local_cells[x][y] = 0 if neighbors.count(1)  <= 1 # 1
