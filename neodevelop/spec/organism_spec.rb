@@ -106,6 +106,10 @@ RSpec.describe Organism do
   end
 
   context "For a space that is 'empty' or 'unpopulated'" do
+
+    organism = Organism.new
+
+    it "Each cell with three neighbors becomes populated." do
       new_population = [
         [0,1,0],
         [0,0,0],
@@ -115,6 +119,29 @@ RSpec.describe Organism do
       organism.prepare_to_evolve
       expect(organism.next_generation[1,1]).to eql 1
       expect(organism.next_generation[2,2]).to eql 1
+    end
+  end
+
+  context "For an organism ready to evolve" do
+
+    organism = Organism.new
+
+    it "evolves the organism one generation" do
+      generation_0 = [
+        [0,1,0],
+        [0,0,0],
+        [1,0,1]
+      ]
+      generation_1 = [
+        [1,1,1],
+        [1,1,1],
+        [1,1,1]
+      ]
+      organism.feed generation_0
+      organism.prepare_to_evolve
+      organism.evolve
+      expect(organism.cells.to_a).to match_array(generation_1)
+    end
   end
 
 end
