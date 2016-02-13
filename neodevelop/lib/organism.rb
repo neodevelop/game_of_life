@@ -3,6 +3,7 @@ require "matrix"
 class Organism
 
   attr_accessor :cells, :next_generation
+  NEW_LINE = "\n"
 
   def initialize
 
@@ -54,11 +55,11 @@ class Organism
     display = ""
     @cells.each_with_index do |e, row, col|
       if e == 1 then
-        display << "*"
+        display += "*"
       else
-        display << "-"
+        display += " "
       end
-      display << "\n" if ((col+1) % @cells.column_count) == 0
+      display += NEW_LINE if ((col+1) % @cells.column_count) == 0
     end
     display
   end
