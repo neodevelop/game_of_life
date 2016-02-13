@@ -27,7 +27,7 @@ RSpec.describe Organism do
     end
 
     it "shows the entire organism" do
-      current_organism = %{---\n-*-\n*-*\n}
+      current_organism = %{   \n * \n* *\n}
       expect(organism.show).to eq current_organism
     end
 

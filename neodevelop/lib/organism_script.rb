@@ -9,10 +9,10 @@ organism = Organism.new
 organism.feed population
 
 
-100.times do |i|
+1000.times do |i|
   system "clear"
   puts organism.show
   organism.prepare_to_evolve
   organism.evolve
-  sleep 0.1
+  sleep 0.055555
 end
