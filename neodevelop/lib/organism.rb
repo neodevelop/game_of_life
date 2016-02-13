@@ -1,9 +1,8 @@
 require "matrix"
-require "colorize"
 
 class Organism
 
-  attr_accessor :cells, :next_generation, :cell_colors
+  attr_accessor :cells, :next_generation
   NEW_LINE = "\n"
 
   def initialize
@@ -13,11 +12,6 @@ class Organism
   def feed(population)
     @cells = Matrix.rows population
     @next_generation = Matrix.rows population
-    colors = []
-    population.each do |line|
-      colors << line.collect do |c| c == 0 ? :black : :green end
-    end
-    @cell_colors = colors
     self
   end
 
@@ -43,20 +37,11 @@ class Organism
       neighbors = neighbors_at x, y
       case
       when c == 1
-        if neighbors.count(1)  <= 1 then # 1
-          local_cells[x][y] = 0
-          @cell_colors[x][y] = :black
-        end
-        if neighbors.count(1)  >= 4 then # 2
-          local_cells[x][y] = 0
-          @cell_colors[x][y] = :black
-        end
+        local_cells[x][y] = 0 if neighbors.count(1)  <= 1 # 1
+        local_cells[x][y] = 0 if neighbors.count(1)  >= 4 # 2
         #local_cells[x][y] = 1 if(neighbors.count(1)  >= 2 and neighbors.count 1 <= 3)# 3
       else
-        if neighbors.count(1)  == 3 then #4
-          local_cells[x][y] = 1
-          @cell_colors[x][y] = :green
-        end
+        local_cells[x][y] = 1 if neighbors.count(1)  == 3 #4
       end
     end
     @next_generation = Matrix.rows local_cells
@@ -82,9 +67,9 @@ class Organism
   def show_with_colors
     @cells.each_with_index do |e, row, col|
       if e == 1 then
-        print "*".colorize(@cell_colors[row][col])
+        print "*"
       else
-        print " ".colorize(@cell_colors[row][col])
+        print " "
       end
       print NEW_LINE if ((col+1) % @cells.column_count) == 0
     end

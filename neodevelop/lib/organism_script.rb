@@ -11,8 +11,9 @@ organism.feed population
 
 1000.times do |i|
   system "clear"
-  organism.show_with_colors
+  #organism.show_with_colors
+  print organism.body
   organism.prepare_to_evolve
   organism.evolve
-  #sleep 0.055555
+  sleep 0.055555
 end
