@@ -1,4 +1,5 @@
 require "matrix"
+require "colorize"
 
 class Organism
 
@@ -42,11 +43,20 @@ class Organism
       neighbors = neighbors_at x, y
       case
       when c == 1
-        local_cells[x][y] = 0 if neighbors.count(1)  <= 1 # 1
-        local_cells[x][y] = 0 if neighbors.count(1)  >= 4 # 2
+        if neighbors.count(1)  <= 1 then # 1
+          local_cells[x][y] = 0
+          @cell_colors[x][y] = :black
+        end
+        if neighbors.count(1)  >= 4 then # 2
+          local_cells[x][y] = 0
+          @cell_colors[x][y] = :black
+        end
         #local_cells[x][y] = 1 if(neighbors.count(1)  >= 2 and neighbors.count 1 <= 3)# 3
       else
-        local_cells[x][y] = 1 if neighbors.count(1)  == 3
+        if neighbors.count(1)  == 3 then #4
+          local_cells[x][y] = 1
+          @cell_colors[x][y] = :green
+        end
       end
     end
     @next_generation = Matrix.rows local_cells
@@ -56,7 +66,7 @@ class Organism
     @cells = @next_generation
   end
 
-  def show
+  def body
     display = ""
     @cells.each_with_index do |e, row, col|
       if e == 1 then
@@ -67,6 +77,17 @@ class Organism
       display += NEW_LINE if ((col+1) % @cells.column_count) == 0
     end
     display
+  end
+
+  def show_with_colors
+    @cells.each_with_index do |e, row, col|
+      if e == 1 then
+        print "*".colorize(@cell_colors[row][col])
+      else
+        print " ".colorize(@cell_colors[row][col])
+      end
+      print NEW_LINE if ((col+1) % @cells.column_count) == 0
+    end
   end
 
 end

@@ -28,7 +28,7 @@ RSpec.describe Organism do
 
     it "shows the entire organism" do
       current_organism = %{   \n * \n* *\n}
-      expect(organism.show).to eq current_organism
+      expect(organism.body).to eq current_organism
     end
 
     it "containing the cells --- -*- *-* and looking for the cell at 0,0 should have eight neighbors(5 with no life, and 3 alive)" do
