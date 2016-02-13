@@ -32,7 +32,7 @@ defmodule OrganismTest do
   end
 
   @tag position: [x: 2, y: 2]
-  test "given a cell in position [0, 2], it should return three neighbors", context do
+  test "given a cell in position [2, 2], it should return three neighbors", context do
     cells = context[:cells]
     organism = %Organism{cells: cells}
     neighbors = Organism.neighbors(organism, context[:position])
@@ -50,12 +50,7 @@ defmodule OrganismTest do
   end
 
   @tag position: [x: 1, y: 1]
-  test "given a cell in position [1, 1], and with distribution [[0, 0, 0], [0, 1, 0], [1, 0, 1]] it should live in the next round", context do
-    cells = context[:cells]
-    organism = %Organism{cells: cells}
-    neighbors = Organism.neighbors(organism, context[:position])
-
-    assert 8 = length(neighbors)
+  test "given a cell in position [1, 1], and with distribution [[0, 0, 0], [0, 1, 0], [1, 0, 1]] should obtain his living neighbors", context do
   end
 
 end
