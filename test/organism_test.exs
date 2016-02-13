@@ -51,6 +51,11 @@ defmodule OrganismTest do
 
   @tag position: [x: 1, y: 1]
   test "given a cell in position [1, 1], and with distribution [[0, 0, 0], [0, 1, 0], [1, 0, 1]] should obtain his living neighbors", context do
+    cells = context[:cells]
+    organism = %Organism{cells: cells}
+    living_neighbors = Organism.living_neighbors_for_cell_in_position(organism, context[:position])
+
+    assert 2 = living_neighbors
   end
 
 end
