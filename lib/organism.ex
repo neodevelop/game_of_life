@@ -16,6 +16,6 @@ defmodule Organism do
 
   def living_neighbors_for_cell_in_position(%Organism{} = organism, position) do
     neighbors(organism, position)
-    |> Enum.count(fn(x) -> x == 1 end)
+    |> Enum.count(&(&1 == 1))
   end
 end
