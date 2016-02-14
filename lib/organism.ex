@@ -31,4 +31,8 @@ defmodule Organism do
     living_neighbors_for_cell_in_position(organism, position) > 3
   end
 
+  def reborn_cell?(%Organism{} = organism, position) do
+    living_neighbors_for_cell_in_position(organism, position) == 3
+  end
+
 end
