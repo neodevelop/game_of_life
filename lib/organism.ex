@@ -8,9 +8,7 @@ defmodule Organism do
         position_y in 0..(length(cells) - 1) and
         not(position_x == x and position_y == y)
     do
-      cells
-      |> Enum.at(position_x)
-      |> Enum.at(position_y)
+      cell_status(cells, position_x, position_y)
     end
   end
 
@@ -33,6 +31,33 @@ defmodule Organism do
 
   def reborn_cell?(%Organism{} = organism, position) do
     living_neighbors_for_cell_in_position(organism, position) == 3
+  end
+
+  def next(%Organism{} = organism) do
+    size = length(organism.cells)
+    cells = for x <- 0..(size - 1) do
+      for y <- 0..(size - 1) do
+        case {cell_status(organism.cells, x, y),
+              cell_die_cause_under_population?(organism, [x: x, y: y]),
+              cell_die_cause_over_population?(organism, [x: x, y: y]),
+              cell_lives_on_next_generation?(organism, [x: x, y: y]),
+              reborn_cell?(organism, [x: x, y: y])
+            } do
+          {1, true, _, _, _} -> 0
+          {1, _, true, _, _} -> 0
+          {1, _, _, true, _} -> 1
+          {0, _, _, _, true} -> 1
+          _ -> 0
+        end
+      end
+    end
+    %Organism{cells: cells}
+  end
+
+  defp cell_status(cells, x, y) do
+    cells
+    |> Enum.at(x)
+    |> Enum.at(y)
   end
 
 end

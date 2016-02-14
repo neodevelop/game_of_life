@@ -98,8 +98,14 @@ defmodule OrganismTest do
     organism = %Organism{cells: cells}
 
     reborn_cell = Organism.reborn_cell?(organism, context[:position])
-
     assert true = reborn_cell
+  end
+
+  test "given an organism with cell distribution [[0, 0, 0], [0, 1, 0], [1, 0, 1]], the next state of the organism should be [[0, 0, 0], [0, 1, 0], [0, 1, 0]]", context do
+    cells = context[:cells]
+    organism = %Organism{cells: cells}
+    %Organism{cells: next_status} = Organism.next(organism)
+    assert ^next_status = [[0, 0, 0], [0, 1, 0], [0, 1, 0]]
   end
 
 end
