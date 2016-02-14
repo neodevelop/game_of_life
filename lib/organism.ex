@@ -18,4 +18,17 @@ defmodule Organism do
     neighbors(organism, position)
     |> Enum.count(&(&1 == 1))
   end
+
+  def cell_die_cause_under_population?(%Organism{} = organism, position) do
+    living_neighbors_for_cell_in_position(organism, position) < 2
+  end
+
+  def cell_lives_on_next_generation?(%Organism{} = organism, position) do
+    living_neighbors_for_cell_in_position(organism, position) == 2 or living_neighbors_for_cell_in_position(organism, position) == 3
+  end
+
+  def cell_die_cause_over_population?(%Organism{} = organism, position) do
+    living_neighbors_for_cell_in_position(organism, position) > 3
+  end
+
 end
