@@ -19,7 +19,7 @@ defmodule OrganismTest do
     organism = %Organism{cells: cells}
     alive_neighbors = Organism.alive_neighbors(organism, context[:position])
 
-    assert 1 = length(alive_neighbors)
+    assert 1 = alive_neighbors
   end
 
   @tag position: [x: 1, y: 0]
@@ -28,7 +28,7 @@ defmodule OrganismTest do
     organism = %Organism{cells: cells}
     alive_neighbors = Organism.alive_neighbors(organism, context[:position])
 
-    assert 2 = length(alive_neighbors)
+    assert 2 = alive_neighbors
   end
 
   @tag position: [x: 2, y: 2]
@@ -37,7 +37,7 @@ defmodule OrganismTest do
     organism = %Organism{cells: cells}
     alive_neighbors = Organism.alive_neighbors(organism, context[:position])
 
-    assert 1 = length(alive_neighbors)
+    assert 1 = alive_neighbors
   end
 
   @tag position: [x: 1, y: 1]
@@ -46,7 +46,7 @@ defmodule OrganismTest do
     organism = %Organism{cells: cells}
     alive_neighbors = Organism.alive_neighbors(organism, context[:position])
 
-    assert 2 = length(alive_neighbors)
+    assert 2 = alive_neighbors
   end
 
   @tag position: [x: 0, y: 2]

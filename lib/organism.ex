@@ -13,11 +13,11 @@ defmodule Organism do
     do
       1
     end
+    |> Enum.sum
   end
 
   def living_neighbors_for_cell_in_position(%Organism{} = organism, position) do
     alive_neighbors(organism, position)
-    |> Enum.sum
   end
 
   def cell_die_cause_under_population?(%Organism{} = organism, position) do
