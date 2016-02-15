@@ -16,38 +16,20 @@ defmodule Organism do
     |> Enum.sum
   end
 
-  def cell_die_cause_under_population?(%Organism{} = organism, position) do
-    alive_neighbors(organism, position) < 2
-  end
-
-  def cell_lives_on_next_generation?(%Organism{} = organism, position) do
-    alive_neighbors(organism, position) == 2 or alive_neighbors(organism, position) == 3
-  end
-
-  def cell_die_cause_over_population?(%Organism{} = organism, position) do
-    alive_neighbors(organism, position) > 3
-  end
-
-  def reborn_cell?(%Organism{} = organism, position) do
-    alive_neighbors(organism, position) == 3
+  def next_generation(%Organism{} = organism, [x: x, y: y] = position) do
+    case {cell_status(organism.cells, x, y), alive_neighbors(organism, position)} do
+        {1, 2} -> 1
+        {1, 3} -> 1
+        {0, 3} -> 1
+        _ -> 0
+    end
   end
 
   def next(%Organism{} = organism) do
     size = length(organism.cells)
     cells = for x <- 0..(size - 1) do
       for y <- 0..(size - 1) do
-        case {cell_status(organism.cells, x, y),
-              cell_die_cause_under_population?(organism, [x: x, y: y]),
-              cell_die_cause_over_population?(organism, [x: x, y: y]),
-              cell_lives_on_next_generation?(organism, [x: x, y: y]),
-              reborn_cell?(organism, [x: x, y: y])
-            } do
-          {1, true, _, _, _} -> 0
-          {1, _, true, _, _} -> 0
-          {1, _, _, true, _} -> 1
-          {0, _, _, _, true} -> 1
-          _ -> 0
-        end
+        next_generation(organism, [x: x, y: y])
       end
     end
     %Organism{cells: cells}

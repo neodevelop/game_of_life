@@ -55,41 +55,41 @@ defmodule OrganismTest do
     cells = context[:cells]
     organism = %Organism{cells: cells}
 
-    cell_should_die = Organism.cell_die_cause_under_population?(organism, context[:position])
+    cell_should_die = Organism.next_generation(organism, context[:position])
 
-    assert true = cell_should_die
+    assert 0 = cell_should_die
   end
 
-  # Any live cell with two or three live neighbours lives on to the next generation
+  # Rule 2.- Any live cell with two or three live neighbours lives on to the next generation
   @tag position: [x: 1, y: 1]
   test "given a living cell in position [1, 1], should live on to the next generation", context do
     cells = context[:cells]
     organism = %Organism{cells: cells}
 
-    cell_should_live = Organism.cell_lives_on_next_generation?(organism, context[:position])
+    cell_should_live = Organism.next_generation(organism, context[:position])
 
-    assert true = cell_should_live
+    assert 1 = cell_should_live
   end
 
-  # Any live cell with more than three live neighbours dies, as if by over-population
+  # Rule 3.- Any live cell with more than three live neighbours dies, as if by over-population
   @tag position: [x: 1, y: 1]
   test "given a living cell in position [1, 1], should die because has more than three neighbors", context do
     cells = [[0, 0, 0], [0, 1, 1], [1, 1, 1]]
     organism = %Organism{cells: cells}
 
-    cell_should_die = Organism.cell_die_cause_over_population?(organism, context[:position])
+    cell_should_die = Organism.next_generation(organism, context[:position])
 
-    assert true = cell_should_die
+    assert 0 = cell_should_die
   end
 
-  # Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+  # Rule 4.- Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
   @tag position: [x: 2, y: 1]
   test "given a dead cell in position [2, 1], should reborn because has exactly three neighbors", context do
     cells = context[:cells]
     organism = %Organism{cells: cells}
 
-    reborn_cell = Organism.reborn_cell?(organism, context[:position])
-    assert true = reborn_cell
+    reborn_cell = Organism.next_generation(organism, context[:position])
+    assert 1 = reborn_cell
   end
 
   test "given an organism with cell distribution [[0, 0, 0], [0, 1, 0], [1, 0, 1]], the next state of the organism should be [[0, 0, 0], [0, 1, 0], [0, 1, 0]]", context do
