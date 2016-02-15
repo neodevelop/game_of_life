@@ -12,9 +12,9 @@ defmodule GameOfLife do
   defp print(organism) do
     IO.puts(String.duplicate("\n", 100))
 
-    for x <- (0..length(organism.cells) - 1) do
-      for y <- (0..length(organism.cells) - 1) do
-        case Organism.cell_status(organism.cells, x, y) do
+    for x <- (0..Organism.size(organism) - 1) do
+      for y <- (0..Organism.size(organism) - 1) do
+        case Organism.cell_status(organism, x, y) do
           0 -> IO.write "."
           1 -> IO.write "*"
         end
