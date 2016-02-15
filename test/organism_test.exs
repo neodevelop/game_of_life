@@ -14,39 +14,39 @@ defmodule OrganismTest do
   end
 
   @tag position: [x: 0, y: 0]
-  test "given a cell in position [0, 0], it should return three neighbors", context do
+  test "given a cell in position [0, 0], it should return zero alive neighbors", context do
     cells = context[:cells]
     organism = %Organism{cells: cells}
-    neighbors = Organism.neighbors(organism, context[:position])
+    alive_neighbors = Organism.alive_neighbors(organism, context[:position])
 
-    assert 3 = length(neighbors)
+    assert 1 = length(alive_neighbors)
   end
 
   @tag position: [x: 1, y: 0]
-  test "given a cell in position [1, 0], it should return five neighbors", context do
+  test "given a cell in position [1, 0], it should return two alive neighbors", context do
     cells = context[:cells]
     organism = %Organism{cells: cells}
-    neighbors = Organism.neighbors(organism, context[:position])
+    alive_neighbors = Organism.alive_neighbors(organism, context[:position])
 
-    assert 5 = length(neighbors)
+    assert 2 = length(alive_neighbors)
   end
 
   @tag position: [x: 2, y: 2]
-  test "given a cell in position [2, 2], it should return three neighbors", context do
+  test "given a cell in position [2, 2], it should return two neighbors", context do
     cells = context[:cells]
     organism = %Organism{cells: cells}
-    neighbors = Organism.neighbors(organism, context[:position])
+    alive_neighbors = Organism.alive_neighbors(organism, context[:position])
 
-    assert 3 = length(neighbors)
+    assert 1 = length(alive_neighbors)
   end
 
   @tag position: [x: 1, y: 1]
-  test "given a cell in position [1, 1], it should return eight neighbors", context do
+  test "given a cell in position [1, 1], it should return two neighbors", context do
     cells = context[:cells]
     organism = %Organism{cells: cells}
-    neighbors = Organism.neighbors(organism, context[:position])
+    alive_neighbors = Organism.alive_neighbors(organism, context[:position])
 
-    assert 8 = length(neighbors)
+    assert 2 = length(alive_neighbors)
   end
 
   @tag position: [x: 0, y: 2]

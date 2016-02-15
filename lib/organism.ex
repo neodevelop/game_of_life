@@ -3,20 +3,21 @@ defmodule Organism do
 
   def new(data) when is_list(data), do: %Organism{cells: data}
 
-  def neighbors(%Organism{cells: cells}, [x: x, y: y]) do
+  def alive_neighbors(%Organism{cells: cells}, [x: x, y: y]) do
     for position_x <- (x - 1)..(x + 1),
         position_y <- (y - 1)..(y + 1),
         position_x in 0..(length(cells) - 1) and
         position_y in 0..(length(cells) - 1) and
-        not(position_x == x and position_y == y)
+        not(position_x == x and position_y == y) and
+        cell_status(cells, position_x, position_y) == 1
     do
-      cell_status(cells, position_x, position_y)
+      1
     end
   end
 
   def living_neighbors_for_cell_in_position(%Organism{} = organism, position) do
-    neighbors(organism, position)
-    |> Enum.count(&(&1 == 1))
+    alive_neighbors(organism, position)
+    |> Enum.sum
   end
 
   def cell_die_cause_under_population?(%Organism{} = organism, position) do
