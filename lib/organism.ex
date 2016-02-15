@@ -41,4 +41,6 @@ defmodule Organism do
     |> Enum.at(y)
   end
 
+  def size(%Organism{cells: cells}), do: length(cells)
+
 end

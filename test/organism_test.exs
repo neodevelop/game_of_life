@@ -9,7 +9,7 @@ defmodule OrganismTest do
   end
 
   @tag position: []
-  test "given an organism with an initial state of [[0, 0, 0], [0, 1, 0], [1, 0, 1]] it should return a new Organism structure", context do
+  test "given an organism with an initial state of [[0, 0, 0], [0, 1, 0], [1, 0, 1]] it should return a new Organism structure" do
     cells = [[0, 0, 0], [0, 1, 0], [1, 0, 1]]
     organism = Organism.new(cells)
     assert ^cells = organism.cells, "There was something wrong with initialization"
