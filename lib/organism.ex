@@ -1,6 +1,8 @@
 defmodule Organism do
   defstruct cells: nil
 
+  def new(data) when is_list(data), do: %Organism{cells: data}
+
   def neighbors(%Organism{cells: cells}, [x: x, y: y]) do
     for position_x <- (x - 1)..(x + 1),
         position_y <- (y - 1)..(y + 1),
@@ -54,7 +56,7 @@ defmodule Organism do
     %Organism{cells: cells}
   end
 
-  defp cell_status(cells, x, y) do
+  def cell_status(cells, x, y) do
     cells
     |> Enum.at(x)
     |> Enum.at(y)
