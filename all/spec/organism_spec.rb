@@ -1,7 +1,7 @@
 require "organism"
 
-RSpec.describe Organism do 
-  organism = Organism.new
+RSpec.describe Organism do
+  organism = Organism.new([[0,0,0],[0,1,0],[1,0,1]])
 
 
   ##it "should evolve an organism with first rule" do
@@ -79,8 +79,17 @@ RSpec.describe Organism do
 
   it "given an organism [[0,0,0],[0,1,0],[1,0,1]], after the rules applied the next state should be [[0,0,0],[0,1,0],[0,1,0]]" do
     cells = organism.next_state()
+    expect(cells).to eq([[0,0,0],[0,1,0],[0,1,0]])
+  end
 
-    expect(cells).to match_array([[0,0,0],[0,1,0],[0,1,0]])
+  it "given an organism [[0,1,0],[0,1,0],[0,1,0]], after the two generations the state should be [[0,1,0],[0,1,0],[0,1,0]]" do
+    organism = Organism.new([[0,1,0],[0,1,0],[0,1,0]])
+    cells = organism.next_state()
+    expect(cells).to eq([[0,0,0],[1,1,1],[0,0,0]])
+    organism.evolve()
+
+    cells = organism.next_state()
+    expect(cells).to eq([[0,1,0],[0,1,0],[0,1,0]])
   end
 
 end
