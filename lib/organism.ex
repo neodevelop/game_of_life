@@ -16,24 +16,20 @@ defmodule Organism do
     |> Enum.sum
   end
 
-  def living_neighbors_for_cell_in_position(%Organism{} = organism, position) do
-    alive_neighbors(organism, position)
-  end
-
   def cell_die_cause_under_population?(%Organism{} = organism, position) do
-    living_neighbors_for_cell_in_position(organism, position) < 2
+    alive_neighbors(organism, position) < 2
   end
 
   def cell_lives_on_next_generation?(%Organism{} = organism, position) do
-    living_neighbors_for_cell_in_position(organism, position) == 2 or living_neighbors_for_cell_in_position(organism, position) == 3
+    alive_neighbors(organism, position) == 2 or alive_neighbors(organism, position) == 3
   end
 
   def cell_die_cause_over_population?(%Organism{} = organism, position) do
-    living_neighbors_for_cell_in_position(organism, position) > 3
+    alive_neighbors(organism, position) > 3
   end
 
   def reborn_cell?(%Organism{} = organism, position) do
-    living_neighbors_for_cell_in_position(organism, position) == 3
+    alive_neighbors(organism, position) == 3
   end
 
   def next(%Organism{} = organism) do

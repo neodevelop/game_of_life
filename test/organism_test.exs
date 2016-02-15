@@ -32,7 +32,7 @@ defmodule OrganismTest do
   end
 
   @tag position: [x: 2, y: 2]
-  test "given a cell in position [2, 2], it should return two neighbors", context do
+  test "given a cell in position [2, 2], it should return two alive neighbors", context do
     cells = context[:cells]
     organism = %Organism{cells: cells}
     alive_neighbors = Organism.alive_neighbors(organism, context[:position])
@@ -41,21 +41,12 @@ defmodule OrganismTest do
   end
 
   @tag position: [x: 1, y: 1]
-  test "given a cell in position [1, 1], it should return two neighbors", context do
+  test "given a cell in position [1, 1], it should return two alive neighbors", context do
     cells = context[:cells]
     organism = %Organism{cells: cells}
     alive_neighbors = Organism.alive_neighbors(organism, context[:position])
 
     assert 2 = alive_neighbors
-  end
-
-  @tag position: [x: 0, y: 2]
-  test "given a cell in position [1, 1], and with distribution [[0, 0, 0], [0, 1, 0], [1, 0, 1]] should obtain two living neighbors", context do
-    cells = context[:cells]
-    organism = %Organism{cells: cells}
-    living_neighbors = Organism.living_neighbors_for_cell_in_position(organism, context[:position])
-
-    assert 1 = living_neighbors
   end
 
   # Rule 1.- Any live cell with fewer than two live neighbours dies, as if caused by under-population
