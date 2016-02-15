@@ -18,10 +18,10 @@ defmodule Organism do
 
   def next_generation(%Organism{} = organism, x, y) do
     case {cell_status(organism.cells, x, y), alive_neighbors(organism, x, y)} do
-        {1, 2} -> 1
-        {1, 3} -> 1
-        {0, 3} -> 1
-        _ -> 0
+      {1, 2} -> 1
+      {1, 3} -> 1
+      {0, 3} -> 1
+      _ -> 0
     end
   end
 

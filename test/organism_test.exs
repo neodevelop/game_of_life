@@ -3,20 +3,21 @@ defmodule OrganismTest do
   doctest Organism
 
   setup context do
-    {:ok, [cells: [[0, 0, 0], [0, 1, 0], [1, 0, 1]], position: context[:position]]}
+    cells = [[0, 0, 0], [0, 1, 0], [1, 0, 1]]
+    organism = Organism.new(cells)
+    {:ok, [organism: organism, position: context[:position]]}
   end
 
   @tag position: []
   test "given an organism with an initial state of [[0, 0, 0], [0, 1, 0], [1, 0, 1]] it should return a new Organism structure", context do
-    cells = context[:cells]
-    organism = Organism.new cells
+    cells = [[0, 0, 0], [0, 1, 0], [1, 0, 1]]
+    organism = Organism.new(cells)
     assert ^cells = organism.cells, "There was something wrong with initialization"
   end
 
   @tag position: [x: 0, y: 0]
   test "given a cell in position [0, 0], it should return zero alive neighbors", context do
-    cells = context[:cells]
-    organism = %Organism{cells: cells}
+    organism = context[:organism]
     [x: x, y: y] = context[:position]
     alive_neighbors = Organism.alive_neighbors(organism, x, y)
 
@@ -25,8 +26,7 @@ defmodule OrganismTest do
 
   @tag position: [x: 1, y: 0]
   test "given a cell in position [1, 0], it should return two alive neighbors", context do
-    cells = context[:cells]
-    organism = %Organism{cells: cells}
+    organism = context[:organism]
     [x: x, y: y] = context[:position]
     alive_neighbors = Organism.alive_neighbors(organism, x, y)
 
@@ -35,8 +35,7 @@ defmodule OrganismTest do
 
   @tag position: [x: 2, y: 2]
   test "given a cell in position [2, 2], it should return two alive neighbors", context do
-    cells = context[:cells]
-    organism = %Organism{cells: cells}
+    organism = context[:organism]
     [x: x, y: y] = context[:position]
     alive_neighbors = Organism.alive_neighbors(organism, x, y)
 
@@ -45,8 +44,7 @@ defmodule OrganismTest do
 
   @tag position: [x: 1, y: 1]
   test "given a cell in position [1, 1], it should return two alive neighbors", context do
-    cells = context[:cells]
-    organism = %Organism{cells: cells}
+    organism = context[:organism]
     [x: x, y: y] = context[:position]
     alive_neighbors = Organism.alive_neighbors(organism, x, y)
 
@@ -56,8 +54,7 @@ defmodule OrganismTest do
   # Rule 1.- Any live cell with fewer than two live neighbours dies, as if caused by under-population
   @tag position: [x: 0, y: 2]
   test "given a living cell in position [0, 2], should die because has fewer than two live neighbors", context do
-    cells = context[:cells]
-    organism = %Organism{cells: cells}
+    organism = context[:organism]
 
     [x: x, y: y] = context[:position]
     cell_should_die = Organism.next_generation(organism, x, y)
@@ -68,8 +65,7 @@ defmodule OrganismTest do
   # Rule 2.- Any live cell with two or three live neighbours lives on to the next generation
   @tag position: [x: 1, y: 1]
   test "given a living cell in position [1, 1], should live on to the next generation", context do
-    cells = context[:cells]
-    organism = %Organism{cells: cells}
+    organism = context[:organism]
 
     [x: x, y: y] = context[:position]
     cell_should_live = Organism.next_generation(organism, x, y)
@@ -81,7 +77,7 @@ defmodule OrganismTest do
   @tag position: [x: 1, y: 1]
   test "given a living cell in position [1, 1], should die because has more than three neighbors", context do
     cells = [[0, 0, 0], [0, 1, 1], [1, 1, 1]]
-    organism = %Organism{cells: cells}
+    organism = Organism.new(cells)
 
     [x: x, y: y] = context[:position]
     cell_should_die = Organism.next_generation(organism, x, y)
@@ -92,8 +88,7 @@ defmodule OrganismTest do
   # Rule 4.- Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
   @tag position: [x: 2, y: 1]
   test "given a dead cell in position [2, 1], should reborn because has exactly three neighbors", context do
-    cells = context[:cells]
-    organism = %Organism{cells: cells}
+    organism = context[:organism]
 
     [x: x, y: y] = context[:position]
     reborn_cell = Organism.next_generation(organism, x, y)
@@ -101,8 +96,7 @@ defmodule OrganismTest do
   end
 
   test "given an organism with cell distribution [[0, 0, 0], [0, 1, 0], [1, 0, 1]], the next state of the organism should be [[0, 0, 0], [0, 1, 0], [0, 1, 0]]", context do
-    cells = context[:cells]
-    organism = %Organism{cells: cells}
+    organism = context[:organism]
     %Organism{cells: next_status} = Organism.next(organism)
     assert ^next_status = [[0, 0, 0], [0, 1, 0], [0, 1, 0]]
   end
