@@ -3,7 +3,7 @@ defmodule Organism do
 
   def new(data) when is_list(data), do: %Organism{cells: data}
 
-  def alive_neighbors(%Organism{cells: cells}, [x: x, y: y]) do
+  def alive_neighbors(%Organism{cells: cells}, x, y) do
     for position_x <- (x - 1)..(x + 1),
         position_y <- (y - 1)..(y + 1),
         position_x in 0..(length(cells) - 1) and
@@ -16,8 +16,8 @@ defmodule Organism do
     |> Enum.sum
   end
 
-  def next_generation(%Organism{} = organism, [x: x, y: y] = position) do
-    case {cell_status(organism.cells, x, y), alive_neighbors(organism, position)} do
+  def next_generation(%Organism{} = organism, x, y) do
+    case {cell_status(organism.cells, x, y), alive_neighbors(organism, x, y)} do
         {1, 2} -> 1
         {1, 3} -> 1
         {0, 3} -> 1
@@ -29,7 +29,7 @@ defmodule Organism do
     size = length(organism.cells)
     cells = for x <- 0..(size - 1) do
       for y <- 0..(size - 1) do
-        next_generation(organism, [x: x, y: y])
+        next_generation(organism, x, y)
       end
     end
     %Organism{cells: cells}

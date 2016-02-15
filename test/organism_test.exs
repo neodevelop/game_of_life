@@ -17,7 +17,8 @@ defmodule OrganismTest do
   test "given a cell in position [0, 0], it should return zero alive neighbors", context do
     cells = context[:cells]
     organism = %Organism{cells: cells}
-    alive_neighbors = Organism.alive_neighbors(organism, context[:position])
+    [x: x, y: y] = context[:position]
+    alive_neighbors = Organism.alive_neighbors(organism, x, y)
 
     assert 1 = alive_neighbors
   end
@@ -26,7 +27,8 @@ defmodule OrganismTest do
   test "given a cell in position [1, 0], it should return two alive neighbors", context do
     cells = context[:cells]
     organism = %Organism{cells: cells}
-    alive_neighbors = Organism.alive_neighbors(organism, context[:position])
+    [x: x, y: y] = context[:position]
+    alive_neighbors = Organism.alive_neighbors(organism, x, y)
 
     assert 2 = alive_neighbors
   end
@@ -35,7 +37,8 @@ defmodule OrganismTest do
   test "given a cell in position [2, 2], it should return two alive neighbors", context do
     cells = context[:cells]
     organism = %Organism{cells: cells}
-    alive_neighbors = Organism.alive_neighbors(organism, context[:position])
+    [x: x, y: y] = context[:position]
+    alive_neighbors = Organism.alive_neighbors(organism, x, y)
 
     assert 1 = alive_neighbors
   end
@@ -44,7 +47,8 @@ defmodule OrganismTest do
   test "given a cell in position [1, 1], it should return two alive neighbors", context do
     cells = context[:cells]
     organism = %Organism{cells: cells}
-    alive_neighbors = Organism.alive_neighbors(organism, context[:position])
+    [x: x, y: y] = context[:position]
+    alive_neighbors = Organism.alive_neighbors(organism, x, y)
 
     assert 2 = alive_neighbors
   end
@@ -55,7 +59,8 @@ defmodule OrganismTest do
     cells = context[:cells]
     organism = %Organism{cells: cells}
 
-    cell_should_die = Organism.next_generation(organism, context[:position])
+    [x: x, y: y] = context[:position]
+    cell_should_die = Organism.next_generation(organism, x, y)
 
     assert 0 = cell_should_die
   end
@@ -66,7 +71,8 @@ defmodule OrganismTest do
     cells = context[:cells]
     organism = %Organism{cells: cells}
 
-    cell_should_live = Organism.next_generation(organism, context[:position])
+    [x: x, y: y] = context[:position]
+    cell_should_live = Organism.next_generation(organism, x, y)
 
     assert 1 = cell_should_live
   end
@@ -77,7 +83,8 @@ defmodule OrganismTest do
     cells = [[0, 0, 0], [0, 1, 1], [1, 1, 1]]
     organism = %Organism{cells: cells}
 
-    cell_should_die = Organism.next_generation(organism, context[:position])
+    [x: x, y: y] = context[:position]
+    cell_should_die = Organism.next_generation(organism, x, y)
 
     assert 0 = cell_should_die
   end
@@ -88,7 +95,8 @@ defmodule OrganismTest do
     cells = context[:cells]
     organism = %Organism{cells: cells}
 
-    reborn_cell = Organism.next_generation(organism, context[:position])
+    [x: x, y: y] = context[:position]
+    reborn_cell = Organism.next_generation(organism, x, y)
     assert 1 = reborn_cell
   end
 
