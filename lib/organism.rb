@@ -4,20 +4,20 @@ class Organism
 
   attr_accessor :cells, :next_state
 
-  def initialize
-    @cells = [[0,0,0],[0,1,0],[1,0,1]]
-    @next_state = [[0,0,0],[0,1,0],[1,0,1]]
-  end
+  def initialize(init_state)
+    @cells = []
+    @next_state = []
 
-  def populate(cells)
-    @cells = cells
+    init_state.each do |e|
+      @cells << e.dup
+      @next_state << e.dup
+    end
   end
 
   def evolve
-    @cells.each_with_index do | row, index |
-      row.each_with_index do |element, indx |
-        p element
-      end
+    @cells = []
+    @next_state.each do |e|
+      @cells << e.dup
     end
   end
 
@@ -49,7 +49,7 @@ class Organism
   def might_live_because_has_two_or_three_neighbours(cell, neighbors)
     (neighbors.count(1) >= 2 and neighbors.count(1) <= 3)
   end
-  
+
   def might_die_because_has_more_than_tree_neighbours(cell,neighbors)
     neighbors.count(1) > 3
   end
