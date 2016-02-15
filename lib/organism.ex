@@ -25,7 +25,7 @@ defmodule Organism do
     end
   end
 
-  def next(%Organism{} = organism) do
+  def evolve(%Organism{} = organism) do
     cells = for x <- 0..(size(organism) - 1) do
       for y <- 0..(size(organism) - 1) do
         next_generation(organism, x, y)

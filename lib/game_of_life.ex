@@ -5,7 +5,7 @@ defmodule GameOfLife do
   def run(cells, steps) do
     cells
     |> print
-    |> Organism.next
+    |> Organism.evolve
     |> run(steps - 1)
   end
 

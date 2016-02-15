@@ -97,7 +97,7 @@ defmodule OrganismTest do
 
   test "given an organism with cell distribution [[0, 0, 0], [0, 1, 0], [1, 0, 1]], the next state of the organism should be [[0, 0, 0], [0, 1, 0], [0, 1, 0]]", context do
     organism = context[:organism]
-    %Organism{cells: next_status} = Organism.next(organism)
+    %Organism{cells: next_status} = Organism.evolve(organism)
     assert ^next_status = [[0, 0, 0], [0, 1, 0], [0, 1, 0]]
   end
 
