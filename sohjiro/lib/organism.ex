@@ -26,12 +26,15 @@ defmodule Organism do
   end
 
   def evolve(%Organism{} = organism) do
-    cells = for x <- 0..(size(organism) - 1) do
+    %Organism{organism | cells: calculate_next_generation(organism)}
+  end
+
+  def calculate_next_generation(%Organism{} = organism) do
+    for x <- 0..(size(organism) - 1) do
       for y <- 0..(size(organism) - 1) do
         next_generation(organism, x, y)
       end
     end
-    %Organism{cells: cells}
   end
 
   def cell_status(%Organism{cells: cells}, x, y) do
