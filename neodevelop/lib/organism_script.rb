@@ -10,8 +10,8 @@ organism.feed population
 
 
 1000.times do |i|
-  system "clear"
-  #organism.show_with_colors
+  puts "\e[H\e[2J"
+  #print organism.body_with_colors
   print organism.body
   organism.prepare_to_evolve
   organism.evolve

@@ -1,8 +1,9 @@
 require "matrix"
+require "colorize"
 
 class Organism
 
-  attr_accessor :cells, :next_generation
+  attr_accessor :cells, :next_generation, :cell_colors
   NEW_LINE = "\n"
 
   def initialize
@@ -12,6 +13,11 @@ class Organism
   def feed(population)
     @cells = Matrix.rows population
     @next_generation = Matrix.rows population
+    colors = []
+    population.each do |line|
+      colors << line.collect do |c| c == 0 ? :black : :green end
+    end
+    @cell_colors = colors
     self
   end
 
@@ -60,15 +66,17 @@ class Organism
     display
   end
 
-  def show_with_colors
+  def body_with_colors
+    display = ""
     @cells.each_with_index do |e, row, col|
       if e == 1 then
-        print "*"
+        display += "*".colorize(@cell_colors[row][col])
       else
-        print " "
+        display += " ".colorize(@cell_colors[row][col])
       end
-      print NEW_LINE if ((col+1) % @cells.column_count) == 0
+      display += NEW_LINE if ((col+1) % @cells.column_count) == 0
     end
+    display
   end
 
 end
